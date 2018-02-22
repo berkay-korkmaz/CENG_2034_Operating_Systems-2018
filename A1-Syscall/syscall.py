@@ -5,15 +5,14 @@ def uselessFunction():
 
 print("Parent pid: ", os.getpid() , "\n")
 
-cpid = os.fork()
-for i in range(10):
+for i in range(1, 10):
+    cpid = os.fork()
     if cpid == 0: # This block will work
-        uselessFunction()
+        uselessFunction() # Child process does some useless work
         print("Child",i ,"pid: ", os.getpid())
         os.kill(os.getpid(), signal.SIGKILL) # Kill the current process which is the child
         print("I'm dead inside!!!") # This won't print because child process is dead now
-    else: # Create a child process every iteration
+    else:
         time.sleep(1)
-        cpid = os.fork()
 
 os.kill(os.getpid(), signal.SIGKILL) # Kill the main process
